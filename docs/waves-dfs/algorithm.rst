@@ -8,9 +8,6 @@
 Background and Related Work
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Background and Related Work
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
 The concept of wave algorithms originated from the need to efficiently manage and coordinate distributed systems, where direct communication between all pairs of nodes is infeasible due to the network's scale or topology. The DFS algorithm demonstrates a structured approach to broadcasting and collecting information across a network, ensuring that each node participates in the decision-making process without the need for central coordination.
 
 Related Work
