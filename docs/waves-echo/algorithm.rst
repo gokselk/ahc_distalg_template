@@ -8,7 +8,7 @@
 Background and Related Work
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The concept of wave algorithms originated from the need to efficiently manage and coordinate distributed systems, where direct communication between all pairs of nodes is infeasible due to the network's scale or topology. The Echo algorithm, a specific instance of wave algorithms, demonstrates a structured approach to disseminating and collecting information across a network, ensuring that each node participates in the decision-making process without the need for central coordination.
+The concept of wave algorithms originated from the need to efficiently manage and coordinate distributed systems, where direct communication between all pairs of nodes is infeasible due to the network's scale or topology. The Echo algorithm demonstrates a structured approach to broadcasting and collecting information across a network, ensuring that each node participates in the decision-making process without the need for central coordination.
 
 Related Work
     - Tarry’s Algorithm: One of the earliest traversal algorithms that made the initial work for subsequent developments in wave algorithms. Tarry's algorithm ensures that a token circulates through a network, visiting each node exactly once, thereby establishing a spanning tree. This algorithm is foundational for understanding the mechanics behind token circulation in distributed systems (Tarry, 1884).
