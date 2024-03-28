@@ -3,7 +3,6 @@
 Introduction
 ============
 
-    
     In the domain of distributed computing, collecting information from every other process in a network is a critical challenge. This is often achieved through a process that sends a request across the network, prompting other processes to reply with the necessary information. Such activities are crucial for tasks like termination detection, routing, and leader election within the network. The Echo algorithm emerges as a significant solution to this problem, encapsulating a process where each computation, known as a wave, adheres to three essential properties: finiteness, the inclusion of one or more decide events, and the causality of events leading to a decision.
 
     The significance of solving this problem lies in the core functionality of distributed systems where effective communication and decision-making processes are critical. Solving this ensures a streamlined operation, whereas failure to address it can lead to inefficiencies or system failures. The Echo algorithm's design tackles this challenge by ensuring that each process within the network contributes to the decision-making process, a task that proves difficult with naive approaches that overlook the complexity of distributed networks and their inherent need for coordinated communication.
