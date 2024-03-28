@@ -8,7 +8,12 @@
 Background and Related Work
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Present any background information survey the related work. Provide citations.
+The concept of wave algorithms originated from the need to efficiently manage and coordinate distributed systems, where direct communication between all pairs of nodes is infeasible due to the network's scale or topology. The Echo algorithm, a specific instance of wave algorithms, demonstrates a structured approach to disseminating and collecting information across a network, ensuring that each node participates in the decision-making process without the need for central coordination.
+
+Related Work
+Tarry’s Algorithm: One of the earliest traversal algorithms that made the initial work for subsequent developments in wave algorithms. Tarry's algorithm ensures that a token circulates through a network, visiting each node exactly once, thereby establishing a spanning tree. This algorithm is foundational for understanding the mechanics behind token circulation in distributed systems (Tarry, 1884).
+
+Depth-First Search (DFS) in Distributed Systems: The adaptation of DFS principles to distributed computing has been instrumental in the development of algorithms that efficiently explore network topologies. This approach has influenced the design of algorithms that prioritize the exploration of unvisited nodes, significantly impacting how information is gathered and disseminated across a network (Awerbuch, 1985).
 
 Distributed Algorithm: |Waves-Echo| 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
