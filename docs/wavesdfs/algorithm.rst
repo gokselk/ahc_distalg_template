@@ -1,6 +1,6 @@
 .. include:: substitutions.rst
 
-|Waves-DFS|
+|WavesDFS|
 =========================================
 
 
@@ -15,7 +15,7 @@ Related Work
 
     - Depth-First Search (DFS) in Distributed Systems: The adaptation of DFS principles to distributed computing has been instrumental in the development of algorithms that efficiently explore network topologies. This approach has influenced the design of algorithms that prioritize the exploration of unvisited nodes, significantly impacting how information is gathered and disseminated across a network (Awerbuch, 1985).
 
-Distributed Algorithm: |Waves-DFS| 
+Distributed Algorithm: |WavesDFS| 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: RST
@@ -61,7 +61,7 @@ Consider a simple network where node A starts the DFS algorithm. Node A sends a 
 Correctness
 ~~~~~~~~~~~
 
-The correctness of the Waves-DFS algorithm is established on its ability to visit all nodes in the network without repetition. It maintains two main properties:
+The correctness of the WavesDFS algorithm is established on its ability to visit all nodes in the network without repetition. It maintains two main properties:
 
 Safety: No node is visited more than once, preventing infinite loops or redundant communications.
 Liveness: Every node in the network will be visited, ensuring complete traversal.

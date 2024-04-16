@@ -1,8 +1,8 @@
 import secrets
 from enum import Enum
 from typing import Any, Dict, List, Optional
-from ...GenericModel import GenericModel, GenericMessageHeader, GenericMessagePayload, GenericMessage
-from ...Generics import Event, EventTypes, logger
+from adhoccomputing.GenericModel import GenericModel, GenericMessageHeader, GenericMessagePayload, GenericMessage
+from adhoccomputing.Generics import Event, EventTypes, logger
 
 class DfsMessageTypes(Enum):
     START = "DFS_START"
@@ -31,17 +31,37 @@ class DfsTraverse(GenericModel):
         self.token_parent: Dict[str, int] = {}
 
     def on_message_from_bottom(self, eventobj: Event):
-        msg = eventobj.eventcontent
-        hdr = msg.header
-        message_source = hdr.messagefrom
-        logger.debug(f"OnMessageFromBottom received from {message_source}")
+            """
+            Handles the 'on_message_from_bottom' event.
 
-        payload: List[Any] = msg.payload.messagepayload
+            Args:
+                eventobj (Event): The event object containing the message.
 
-        if hdr.messagetype in (DfsMessageTypes.FORWARD, DfsMessageTypes.START):
-            self.process_message(hdr, message_source, payload)
+            Returns:
+                None
+            """
+            msg = eventobj.eventcontent
+            hdr = msg.header
+            message_source = hdr.messagefrom
+            logger.debug(f"OnMessageFromBottom received from {message_source}")
+
+            payload: List[Any] = msg.payload.messagepayload
+
+            if hdr.messagetype in (DfsMessageTypes.FORWARD, DfsMessageTypes.START):
+                self.process_message(hdr, message_source, payload)
 
     def process_message(self, hdr: DfsMessageHeader, message_source: int, payload: List[Any]):
+        """
+        Process an incoming message.
+
+        Args:
+            hdr (DfsMessageHeader): The header of the incoming message.
+            message_source (int): The source of the incoming message.
+            payload (List[Any]): The payload of the incoming message.
+
+        Returns:
+            None
+        """
         token = hdr.token
         if hdr.messagetype == DfsMessageTypes.START:
             self.token_parent[token] = -1
@@ -61,6 +81,18 @@ class DfsTraverse(GenericModel):
             self.send_down(Event(self, EventTypes.MFRT, message))
 
     def select_next_target(self, payload: List[Any], unvisited_neighbor: Optional[DfsNode], parent_for_token: int) -> Optional[int]:
+        """
+        Selects the next target node for traversal in the Depth-First Search algorithm.
+
+        Args:
+            payload (List[Any]): The payload data associated with the current node.
+            unvisited_neighbor (Optional[DfsNode]): The unvisited neighbor node to be selected as the next target.
+            parent_for_token (int): The ID of the parent node to be selected as the next target if no unvisited neighbor is available.
+
+        Returns:
+            Optional[int]: The ID of the selected target node, or None if traversal is completed.
+
+        """
         if unvisited_neighbor:
             chosen_neighbor = unvisited_neighbor
             chosen_neighbor.visited = True
@@ -72,18 +104,45 @@ class DfsTraverse(GenericModel):
             return None
 
     def start_traverse(self):
-        token = self.create_token()
-        self.send_self(Event(self, EventTypes.MFRB, self.prepare_message(DfsMessageTypes.START, self.componentinstancenumber, token, [])))
-        logger.debug("Started traversal")
+            """
+            Starts the traversal process by creating a token and sending a start message to itself.
+
+            Returns:
+                None
+            """
+            token = self.create_token()
+            self.send_self(Event(self, EventTypes.MFRB, self.prepare_message(DfsMessageTypes.START, self.componentinstancenumber, token, [])))
+            logger.debug("Started traversal")
 
     def create_token(self) -> str:
+        """
+        Generates a random token using secrets module.
+
+        Returns:
+            str: A random token in hexadecimal format.
+        """
         return secrets.token_hex(32)
 
     def create_neighbor_list(self) -> List[DfsNode]:
+        """
+        Creates a list of DfsNode objects representing the neighbors of the current node.
+
+        Returns:
+            A list of DfsNode objects representing the neighbors of the current node.
+        """
         neighbor_list = self.topology.get_neighbors(self.componentinstancenumber)
         return [DfsNode(n, False) for n in neighbor_list]
     
     def get_neighbors(self, token: str) -> List[DfsNode]:
+        """
+        Retrieves the list of neighboring DfsNodes for a given token.
+
+        Args:
+            token (str): The token for which to retrieve the neighbors.
+
+        Returns:
+            List[DfsNode]: The list of neighboring DfsNodes.
+        """
         mapping = self.token_neighbor.get(token)
         if mapping == None:
             mapping = self.create_neighbor_list()
