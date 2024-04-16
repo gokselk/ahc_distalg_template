@@ -1,6 +1,6 @@
 .. include:: substitutions.rst
 
-|Waves-Echo|
+|WavesEcho|
 =========================================
 
 
@@ -15,7 +15,7 @@ Related Work
 
     - Depth-First Search (DFS) in Distributed Systems: The adaptation of DFS principles to distributed computing has been instrumental in the development of algorithms that efficiently explore network topologies. This approach has influenced the design of algorithms that prioritize the exploration of unvisited nodes, significantly impacting how information is gathered and disseminated across a network (Awerbuch, 1985).
 
-Distributed Algorithm: |Waves-Echo| 
+Distributed Algorithm: |WavesEcho| 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: RST
@@ -47,7 +47,7 @@ Distributed Algorithm: |Waves-Echo|
 Example
 ~~~~~~~~
 
-Consider a network of five nodes arranged in a star topology, with the central node as the initiator. The Waves-Echo algorithm facilitates the collection and dissemination of information, ultimately leading to a decision made by the initiator after all nodes have communicated their status.
+Consider a network of five nodes arranged in a star topology, with the central node as the initiator. The WavesEcho algorithm facilitates the collection and dissemination of information, ultimately leading to a decision made by the initiator after all nodes have communicated their status.
 
 Correctness
 ~~~~~~~~~~~
@@ -58,6 +58,6 @@ The algorithm guarantees that all nodes in the network are reached, and a decisi
 Complexity 
 ~~~~~~~~~~
 
-The theoretical complexity of the Waves-Echo algorithm involves the number of messages proportional to twice the number of edges in the network, with a computational complexity that depends on the size of the network and its topology.
+The theoretical complexity of the WavesEcho algorithm involves the number of messages proportional to twice the number of edges in the network, with a computational complexity that depends on the size of the network and its topology.
 
 .. [Fokking2013] Wan Fokkink, Distributed Algorithms An Intuitive Approach, The MIT Press Cambridge, Massachusetts London, England, 2013
