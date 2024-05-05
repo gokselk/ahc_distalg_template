@@ -20,44 +20,56 @@ Distributed Algorithm: |WavesEcho|
 
 .. code-block:: RST
     :linenos:
-    :caption: Echo algorithm
-    
-    Implements: WavesEcho Instance: we
-    Uses: NetworkCommunication Instance: nc
-    Events: Init, MessageFromBottom, MessageFromTop
+    :caption: Echo Algorithm.
+
+    Implements: EchoTraverse Instance: echoTraverse
+    Uses: AdhocComputing Network Model
+    Events: Init, MessageFromBottom
     Needs:
-    
+
     OnInit: () do
-        For each neighbor do
-            Trigger nc.SendMessage (neighbor, "StartMessage")
-    
-    OnMessageFromBottom: (message, sender) do
-        If first message from sender then
-            Mark sender as parent
-            For each neighbor except sender do
-                Trigger nc.SendMessage (neighbor, "EchoMessage")
-    
-    OnMessageFromTop: (message, sender) do
-        If received messages from all neighbors then
-            If not initiator then
-                Trigger nc.SendMessage (parent, "DecisionMessage")
+        Generate and store a unique token
+        Send "ECHO_START" message to self to initiate the echo process
+        Log "Started traversal"
+
+    OnMessageFromBottom: (eventobj) do
+        Extract the message, header, and payload from eventobj
+        Log received message details
+        If message type is "ECHO_START" or "ECHO_MESSAGE" then
+            Process the message using the process_message function
+
+    process_message: (hdr, message_source, payload) do
+        Retrieve or set the parent based on the token
+        Mark all unvisited neighbors and send them an "ECHO_MESSAGE"
+        For each neighbor, check if they have replied, if not, continue to wait
+        If all neighbors have replied:
+            If this node has a parent then
+                Append current node ID to payload
+                Prepare and send an "ECHO_MESSAGE" back to the parent
             Else
-                Perform decision
+                Log that this node has completed the traversal
+
+    get_neighbors: (token) do
+        Retrieve the list of neighboring nodes for the given token
+        If no list exists, create it from the topology's neighbor data
+        Return the list of neighbors
+
+    prepare_message: (message_type, neighbor, token, payload) do
+        Create a new message with specified parameters
+        Return the newly created message
+
 
 Example
 ~~~~~~~~
 
-Consider a network of five nodes arranged in a star topology, with the central node as the initiator. The WavesEcho algorithm facilitates the collection and dissemination of information, ultimately leading to a decision made by the initiator after all nodes have communicated their status.
+Consider a network consisting of five nodes configured in a star topology, where the central node serves as the initiator. Utilizing the Echo algorithm, this network engages in a process whereby information is systematically gathered from all peripheral nodes. Each node sends its status back to the central node, which aggregates these inputs to make a final decision. This setup demonstrates how the Echo algorithm efficiently handles data collection and decision-making within a centrally coordinated network structure.
 
 Correctness
 ~~~~~~~~~~~
 
-The algorithm guarantees that all nodes in the network are reached, and a decision is made based on the collective input. This is achieved through the structured message passing and decision-making process inherent in the algorithm's design.
-
+The Echo algorithm ensures complete and accurate information gathering from every node in the network. The structured sequential messaging and response mechanism ensures that every node is reached and can communicate its status back to the initiator. The correctness of this algorithm is upheld by the guaranteed delivery and processing of messages, which assures that a comprehensive decision is based on the data received from all nodes in the network.
 
 Complexity 
 ~~~~~~~~~~
 
-The theoretical complexity of the WavesEcho algorithm involves the number of messages proportional to twice the number of edges in the network, with a computational complexity that depends on the size of the network and its topology.
-
-.. [Fokking2013] Wan Fokkink, Distributed Algorithms An Intuitive Approach, The MIT Press Cambridge, Massachusetts London, England, 2013
+The message complexity of the Echo algorithm is theoretically proportional to twice the number of edges in the network. This is because each communication link is used twice—once for sending the initial message and once for receiving the echo. The computational complexity, however, is largely influenced by the network’s topology and size. In centralized structures like the star topology, the initiator node bears a higher computational load due to its role in processing incoming data from all other nodes, which is generally proportional to the number of connections it manages.
